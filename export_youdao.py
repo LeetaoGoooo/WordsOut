@@ -19,10 +19,10 @@ def get_books() -> List[Book]:
     url = "https://dict.youdao.com/wordbook/webapi/v2/opts"
     resp = requests.get(url=url, cookies=cj)
     if resp.status_code != 200:
-        print("请求有道单词本失败,请确保已经登录有道单词本: https://www.youdao.com/webwordbook/wordlist")
+        print("Request failed. Make sure you're logged in: https://www.youdao.com/webwordbook/wordlist")
         return []
     response = resp.json()
-    print("获取单词本列表成功,累计获取{}个单词本".format(len(response["data"]["book"])))
+    print("Fetched the book successfully, getting {} books in total".format(len(response["data"]["book"])))
     return response["data"]["book"]
 
 
@@ -37,7 +37,7 @@ def get_words_by_book(limit, offset,sort, book:Book):
         "bookId": book["bookId"],
     }, cookies=cj)
     if resp.status_code != 200:
-        print("请求有道单词本失败,请确保已经登录有道单词本: https://www.youdao.com/webwordbook/wordlist")
+        print("Request failed. Make sure you're logged in: https://www.youdao.com/webwordbook/wordlist")
         return [], 0
     
     response = resp.json()
@@ -55,14 +55,14 @@ def export_book_words(book:Book, limit=48, offset=0, sort="time"):
     
     offset += limit
     
-    print("当前导出单词本【{}】 进度: {}/{}".format(book["bookName"], total if offset > total else offset, total))
+    print("Export【{}】Book current progress: {}/{}".format(book["bookName"], total if offset > total else offset, total))
 
     if offset  > total:
-        print(f"导出单词本【{book['bookName']}】完成")
+        print(f"Already export【{book['bookName']}】book")
         return
     
     sleep_time = random.randint(1, 3)
-    print("休息{}秒".format(sleep_time))
+    print("Task a random sleep for {}s".format(sleep_time))
     time.sleep(sleep_time)
 
     return export_book_words(book, limit, offset, sort)    
@@ -72,7 +72,7 @@ def export_words_to_txt():
     if not books:
         return
     for book in books:
-        print("单词本: {}".format(book["bookName"]))
+        print("Book: {}".format(book["bookName"]))
         export_book_words(book)
 
 
@@ -92,7 +92,7 @@ def parse_cookie_string(cookie_string):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cookie", help="登陆有道单词本后的cookie")
+    parser.add_argument("--cookie", help="cookie, which is set after you log in")
     options = parser.parse_args()
     cj = parse_cookie_string(options.cookie)
     export_words_to_txt()
