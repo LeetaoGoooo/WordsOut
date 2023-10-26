@@ -14,7 +14,7 @@ cj = None
 
 def get_books() -> List[Book]:
     """
-    获取所有的单词本列表
+    Fetched all books
     """
     url = "https://dict.youdao.com/wordbook/webapi/v2/opts"
     resp = requests.get(url=url, cookies=cj)
