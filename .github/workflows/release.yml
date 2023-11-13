@@ -18,6 +18,7 @@ jobs:
           cache: "pip"
           cache-dependency-path: |
             requirements.txt
+      
       - name: Install dependencies
         run: |
           python -m pip install -U -r requirements.txt
@@ -26,43 +27,16 @@ jobs:
         run: |
           pyinstaller export_youdao.spec
 
-      - name: Zip Application(MacOS)
-        uses: montudor/action-zip@v1
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
         with:
-          args: zip -qq -r dist/WordsOut.zip dist/WordsOut.app
-
-      - name: Archive Distribution Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist
-          path: dist/WordsOut.zip
-
-
-  create_release:
-    name: Create GitHub Release
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
-    needs: make_dist
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Get Dists
-        uses: actions/download-artifact@v2
-        with:
-          name: dist
-          path: dist
-
-      - name: Create GitHub Release
+          type: 'zip'
+          filename: WordsOut-${{github.ref_name}}-macos.zip
+          directory: dist
+      
+      - name: macOS Release
         uses: softprops/action-gh-release@v1
-        with:
-          files: dist/*
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-
-      - name: Generate Release Notes
-        run: npx changelogithub
         env:
-          GITHUB_TOKEN: ${{secrets.RELEASE_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          files: dist/WordsOut-${{github.ref_name}}-macos.zip
