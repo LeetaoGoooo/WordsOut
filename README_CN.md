@@ -1,8 +1,13 @@
-# 有道词典导出工具
+# WordsOut
 
 ## 介绍
 
-这个项目是一个用 Python 写的脚本,可以导出有道词典中的单词本的所有词条。它可以帮助你备份词典数据,或者将数据导出到其他格式进行进一步处理，目前仅支持 TXT 格式。
+这个项目是一个用 Python 写的脚本,可以导出词典中的单词本的所有词条。它可以帮助你备份词典数据,或者将数据导出到其他格式进行进一步处理，目前仅支持 TXT 格式,现在也只支持有道词典。
+
+## 计划
+
+- [x] 有道词典
+- [ ] 欧陆词典
 
 ## 用法
 
@@ -20,3 +25,10 @@ pip install -r requirements.txt
 ```
 
 请根据上面的说明使用这个脚本。如果在使用过程中遇到任何问题,欢迎提交 issue。
+
+
+## 使用 GUI
+
+从 release 页面下载
+
+<image src="./screens/app-screen-shot.png" width="300"/><image src="./screens/app-screen-shot1.png" width="300"/>

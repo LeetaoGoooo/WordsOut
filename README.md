@@ -1,8 +1,13 @@
-# Youdao Dictionary Exporter 
+# WordsOut
 
 ## Introduction
 
-This project is a Python script that can export all the word entries from your Youdao dictionary. It helps you backup the dictionary data or export the data to other formats for further processing. Currently it only supports exporting to TXT format.
+This project is a Python script that can export all the word entries from your dictionary. It helps you backup the dictionary data or export the data to other formats for further processing. Currently it only supports exporting to TXT format, now only support Youdao.
+
+## Plan
+
+- [x] Youdao
+- [ ] Eudic
 
 ## Dependencies
 
