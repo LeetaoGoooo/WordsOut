@@ -10,8 +10,9 @@ This project is a Python script that can export all the word entries from your Y
 pip install -r requirements.txt
 ```
 
-
 ## Usage 
+
+### Run source code
 
 1. Make sure you have logged in to your Youdao dictionary account in the browser, and copy the [cookie](./screens/cookie.png)
 
@@ -19,5 +20,10 @@ pip install -r requirements.txt
 
 3. The script will export all words to the `words.txt` file
 
-
 Please follow the above instructions to use this script. If you have any issues during usage, feel free to submit an issue.
+
+## Use GUI
+
+download from release page
+
+<image src="./screens/app-screen-shot.png" width="300"/><image src="./screens/app-screen-shot1.png" width="300"/>

@@ -5,19 +5,20 @@ from typing import TypedDict, List
 from http.cookies import SimpleCookie
 from requests.utils import cookiejar_from_dict
 import argparse
+from gooey import Gooey
+import functools
+print = functools.partial(print, flush=True)
 
 class Book(TypedDict):
     bookName: str
     bookId: str
 
-cj = None
-
-def get_books() -> List[Book]:
+def get_books(cookies:SimpleCookie) -> List[Book]:
     """
     获取所有的单词本列表
     """
     url = "https://dict.youdao.com/wordbook/webapi/v2/opts"
-    resp = requests.get(url=url, cookies=cj)
+    resp = requests.get(url=url, cookies=cookies)
     if resp.status_code != 200:
         print("请求有道单词本失败,请确保已经登录有道单词本: https://www.youdao.com/webwordbook/wordlist")
         return []
@@ -26,7 +27,7 @@ def get_books() -> List[Book]:
     return response["data"]["book"]
 
 
-def get_words_by_book(limit, offset,sort, book:Book):
+def get_words_by_book(limit, offset,sort, book:Book, cookies:SimpleCookie):
     url = "https://dict.youdao.com/wordbook/webapi/v2/word/list"
     resp = requests.get(url=url,params={
         "limit": limit,
@@ -35,7 +36,8 @@ def get_words_by_book(limit, offset,sort, book:Book):
         "lanTo": None,
         "lanFrom": None,
         "bookId": book["bookId"],
-    }, cookies=cj)
+    }, cookies=cookies)
+
     if resp.status_code != 200:
         print("请求有道单词本失败,请确保已经登录有道单词本: https://www.youdao.com/webwordbook/wordlist")
         return [], 0
@@ -46,8 +48,8 @@ def get_words_by_book(limit, offset,sort, book:Book):
     return [word["word"] for word in words], total
 
 
-def export_book_words(book:Book, limit=48, offset=0, sort="time"):
-    words, total = get_words_by_book(limit, offset, sort, book)
+def export_book_words(book:Book, limit=48, offset=0, sort="time", cookies:SimpleCookie=None):
+    words, total = get_words_by_book(limit, offset, sort, book, cookies)
 
     with open("words.txt", "a+") as f:
         f.write("\n".join(words))
@@ -65,15 +67,15 @@ def export_book_words(book:Book, limit=48, offset=0, sort="time"):
     print("休息{}秒".format(sleep_time))
     time.sleep(sleep_time)
 
-    return export_book_words(book, limit, offset, sort)    
+    return export_book_words(book, limit, offset, sort, cookies)    
 
-def export_words_to_txt():
-    books = get_books()
+def export_words_to_txt(cookies:SimpleCookie):
+    books = get_books(cookies)
     if not books:
         return
     for book in books:
         print("单词本: {}".format(book["bookName"]))
-        export_book_words(book)
+        export_book_words(book, cookies=cookies)
 
 
 def parse_cookie_string(cookie_string):
@@ -90,9 +92,16 @@ def parse_cookie_string(cookie_string):
 
     
 
-if __name__ == "__main__":
+@Gooey(
+    program_name='网易有道词典生词本导出', 
+)
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cookie", help="登陆有道单词本后的cookie")
     options = parser.parse_args()
     cj = parse_cookie_string(options.cookie)
-    export_words_to_txt()
+    export_words_to_txt(cookies=cj)
+
+
+if __name__ == '__main__':
+    main()

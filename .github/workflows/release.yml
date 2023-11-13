@@ -1,0 +1,63 @@
+name: Make Distribution
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  make_dist:
+    name: Make Distribution File(macos)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install -U -r requirements.txt
+          mkdir downloads
+
+      - name: Make dist(MacOS)
+        run: |
+          pyinstaller export_youdao.spec
+
+      - name: Archive Distribution Files
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: downloads/*
+
+  create_release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: make_dist
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get Dists
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Generate Release Notes
+        run: npx changelogithub
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
