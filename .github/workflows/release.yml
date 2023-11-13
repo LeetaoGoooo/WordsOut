@@ -27,6 +27,9 @@ jobs:
         run: |
           pyinstaller export_youdao.spec
 
+      - name: Remove Useless file
+        run: rm -rf dist/WordsOut
+
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
