@@ -26,11 +26,17 @@ jobs:
         run: |
           pyinstaller export_youdao.spec
 
+      - name: Zip Application(MacOS)
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r dist/WordsOut.zip dist/WordsOut.app
+
       - name: Archive Distribution Files
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: dist/*
+          path: dist/WordsOut.zip
+
 
   create_release:
     name: Create GitHub Release
