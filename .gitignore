@@ -2,3 +2,4 @@ venv
 build
 dist
 __pyc__
+.DS_Store
