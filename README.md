@@ -2,11 +2,12 @@
 
 ## Introduction
 
-This project is a Python script that can export all the word entries from your dictionary. It helps you backup the dictionary data or export the data to other formats for further processing. Currently it only supports exporting to TXT format, now only support Youdao.
+This project is a Python script that can export all the word entries from your dictionary. It helps you backup the dictionary data or export the data to other formats for further processing. Currently it only supports exporting to TXT format
 
 ## Plan
 
 - [x] Youdao
+- [x] Shanbay
 - [ ] Eudic
 
 ## Dependencies
@@ -19,9 +20,9 @@ pip install -r requirements.txt
 
 ### Run source code
 
-1. Make sure you have logged in to your Youdao dictionary account in the browser, and copy the [cookie](./screens/cookie.png)
+1. Make sure you have logged in to your Youdao/Shanbay dictionary account in the browser, and copy the [cookie](./screens/cookie.png)
 
-2. Run the script: `python export_youdao.py --cookie="your cookie"` 
+2. Run the script: `python app.py --cookie="your cookie" --platform="corresponding platform"` 
 
 3. The script will export all words to the `words.txt` file
 

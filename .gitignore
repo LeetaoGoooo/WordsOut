@@ -1,5 +1,5 @@
 venv
 build
 dist
-__pyc__
+__pycache__
 .DS_Store
