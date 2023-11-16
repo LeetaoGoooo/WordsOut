@@ -2,8 +2,7 @@
 
 
 a = Analysis(
-    ['export_youdao.py'],
-    pathex=[],
+    ['app.py'],
     binaries=[],
     datas=[],
     hiddenimports=[],

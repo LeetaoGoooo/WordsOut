@@ -67,6 +67,7 @@ class Eudic(BaseExport):
         words,total_count = self.fetch_words(start, cookies=cookies)
         while words:
             self.write_words_to_txt(words)
+            self.take_a_break()
             words = []
             start += self.length
             if start <= total_count:

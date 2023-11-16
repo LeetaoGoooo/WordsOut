@@ -25,7 +25,7 @@ jobs:
 
       - name: Make dist(MacOS)
         run: |
-          pyinstaller export_youdao.spec
+          pyinstaller app.spec
 
       - name: Remove Useless file
         run: rm -rf dist/WordsOut
