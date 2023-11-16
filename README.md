@@ -8,8 +8,9 @@ This project is a Python script that can export all the word entries from your d
 
 - [x] Youdao
 - [x] Shanbay
-- [ ] Eudic
-
+- [x] Eudic
+- [ ] BBDC(不背单词)
+ 
 ## Dependencies
 
 ```bash
