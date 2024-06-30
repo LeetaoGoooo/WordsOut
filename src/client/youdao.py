@@ -52,7 +52,7 @@ class YouDao(BaseExport):
     def export_book_words(self, book:Book, limit=48, offset=0, sort="time", cookies:SimpleCookie=None):
         words, total = self.get_words_by_book(limit, offset, sort, book, cookies)
 
-        self.export_words_to_txt(words)
+        self.write_words_to_txt(words)
         
         offset += limit
         

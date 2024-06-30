@@ -1,4 +1,4 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC
 import random
 import time
 from typing import List
@@ -20,7 +20,7 @@ class BaseExport(ABC):
       super().__init_subclass__(**kwargs)
       register(cls)
 
-    @abstractclassmethod
+    @classmethod
     def export(self, cookie_str:str):
         """export words from dict"""
         raise NotImplementedError
