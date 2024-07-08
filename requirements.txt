@@ -2,3 +2,4 @@ requests
 Gooey
 PyExecJS
 pyinstaller
+browser-cookie3
