@@ -25,7 +25,7 @@ jobs:
 
       - name: Make dist(MacOS)
         run: |
-          pyinstaller --windowed build-osx.spec
+          pyinstaller --noconsole --onefile --windowed --icon=logo.ico app.py
 
       - name: Remove Useless file
         run: rm -rf dist/WordsOut
