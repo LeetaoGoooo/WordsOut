@@ -1,5 +1,7 @@
 
+from http.cookiejar import CookieJar
 from http.cookies import SimpleCookie
+from typing import Union
 from src.client.base import BaseExport
 from src.utils import print, parse_cookie_string
 import requests
@@ -61,7 +63,7 @@ class Eudic(BaseExport):
         "categoryid": -1
     }
 
-    def export(self, cookie_str: str):
+    def export(self, cookie_str: Union[str, CookieJar]):
         start = 0
         cookies = parse_cookie_string(cookie_str)
         words,total_count = self.fetch_words(start, cookies=cookies)

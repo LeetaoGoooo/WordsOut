@@ -1,5 +1,6 @@
+from http.cookiejar import CookieJar
 from http.cookies import SimpleCookie
-from typing import List, TypedDict
+from typing import List, TypedDict, Union
 
 import requests
 from src.client.base import BaseExport
@@ -66,7 +67,7 @@ class YouDao(BaseExport):
 
         return self.export_book_words(book, limit, offset, sort, cookies)  
     
-    def export(self, cookie_str:str):
+    def export(self, cookie_str: Union[str, CookieJar]):
         cookies = parse_cookie_string(cookie_str)
         books = self.get_books(cookies)
         if not books:

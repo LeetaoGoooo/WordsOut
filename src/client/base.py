@@ -1,7 +1,8 @@
 from abc import ABC
+from http.cookiejar import CookieJar
 import random
 import time
-from typing import List
+from typing import List, Union
 
 registry = {}
 
@@ -21,7 +22,7 @@ class BaseExport(ABC):
       register(cls)
 
     @classmethod
-    def export(self, cookie_str:str):
+    def export(self, cookie_str:Union[str, CookieJar]):
         """export words from dict"""
         raise NotImplementedError
     

@@ -1,4 +1,6 @@
+from http.cookiejar import CookieJar
 from http.cookies import SimpleCookie
+from typing import Union
 from src.client.base import BaseExport
 from src.utils import parse_cookie_string
 import requests
@@ -11,7 +13,7 @@ class Shanbay(BaseExport):
 
     name = "Shanbay"
 
-    def export(self, cookie_str: str):
+    def export(self, cookie_str: Union[str, CookieJar]):
         words = []
         cookies = parse_cookie_string(cookie_str)
         req_groups = (("/learning_items", "DESC", "CREATED_AT"),
@@ -40,7 +42,6 @@ class Shanbay(BaseExport):
             "ipp": ipp,
             "page": page
         }
-        print(f"request url:{url} params: {params}")
         resp = requests.get(url, params=params, cookies=cookies)
         resp_json = resp.json()
         data = resp_json["data"]
